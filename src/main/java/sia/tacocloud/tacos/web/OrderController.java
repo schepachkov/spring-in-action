@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import sia.tacocloud.tacos.TacoOrder;
+import sia.tacocloud.tacos.data.OrderRepository;
 
 import javax.validation.Valid;
 
@@ -18,17 +19,24 @@ import javax.validation.Valid;
 @SessionAttributes("tacoOrder")
 public class OrderController {
 
+  private final OrderRepository orderRepository;
+
+  public OrderController(OrderRepository orderRepository) {
+    this.orderRepository = orderRepository;
+  }
+
   @GetMapping("/current")
   public String orderForm() {
     return "orderForm";
   }
 
   @PostMapping
-  public String processOrder(@Valid TacoOrder order, Errors errors, SessionStatus sessionStatus) {
+  public String processOrder(@Valid TacoOrder tacoOrder, Errors errors, SessionStatus sessionStatus) {
     if (errors.hasErrors()) {
       return "orderForm";
     }
-    log.info("Order submitted: {}", order);
+    log.info("Order submitted: {}", tacoOrder);
+    orderRepository.save(tacoOrder);
     sessionStatus.setComplete();
     return "redirect:/";
   }
