@@ -1,4 +1,4 @@
-package sia.tacocloud.tacos.data;
+package sia.tacocloud.tacos.data.ingredient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

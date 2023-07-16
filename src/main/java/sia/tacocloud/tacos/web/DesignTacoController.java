@@ -1,9 +1,10 @@
 package sia.tacocloud.tacos.web;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -14,7 +15,7 @@ import sia.tacocloud.tacos.Ingredient;
 import sia.tacocloud.tacos.Ingredient.Type;
 import sia.tacocloud.tacos.Taco;
 import sia.tacocloud.tacos.TacoOrder;
-import sia.tacocloud.tacos.data.JdbcIngredientRepository;
+import sia.tacocloud.tacos.data.ingredient.IngredientRepository;
 
 import javax.validation.Valid;
 
@@ -24,15 +25,15 @@ import javax.validation.Valid;
 @SessionAttributes("tacoOrder")
 public class DesignTacoController {
 
-  private final JdbcIngredientRepository jdbcIngredientRepository;
+  private final IngredientRepository ingredientRepository;
 
-  public DesignTacoController(JdbcIngredientRepository jdbcIngredientRepository) {
-    this.jdbcIngredientRepository = jdbcIngredientRepository;
+  public DesignTacoController(@Qualifier("ingredientDataRepository") IngredientRepository ingredientRepository) {
+    this.ingredientRepository = ingredientRepository;
   }
 
   @ModelAttribute
   public void addIngredientsToModel(Model model) {
-    Iterable<Ingredient> ingredients = jdbcIngredientRepository.findAll();
+    Iterable<Ingredient> ingredients = ingredientRepository.findAll();
     List<Ingredient> ingredientList = new ArrayList<>();
     ingredients.forEach(ingredientList::add);
     for (Type type : Type.values()) {

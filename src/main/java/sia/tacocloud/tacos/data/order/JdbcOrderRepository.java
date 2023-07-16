@@ -1,4 +1,4 @@
-package sia.tacocloud.tacos.data;
+package sia.tacocloud.tacos.data.order;
 
 import org.springframework.asm.Type;
 import org.springframework.jdbc.core.JdbcOperations;
@@ -8,7 +8,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import sia.tacocloud.tacos.Ingredient;
-import sia.tacocloud.tacos.IngredientRef;
 import sia.tacocloud.tacos.Taco;
 import sia.tacocloud.tacos.TacoOrder;
 
