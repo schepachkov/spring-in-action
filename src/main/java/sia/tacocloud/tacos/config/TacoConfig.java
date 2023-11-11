@@ -4,17 +4,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import sia.tacocloud.tacos.Ingredient;
-import sia.tacocloud.tacos.Ingredient.Type;
-import sia.tacocloud.tacos.data.ingredient.IngredientRepository;
+import sia.tacocloud.tacos.data.entity.Ingredient;
+import sia.tacocloud.tacos.data.entity.Ingredient.Type;
+import sia.tacocloud.tacos.data.service.ingredient.IngredientRepository;
 
 @Configuration
 public class TacoConfig {
 
   private final IngredientRepository ingredientRepository;
 
-  public TacoConfig(
-      @Qualifier("ingredientDataRepository") IngredientRepository ingredientRepository) {
+  public TacoConfig(@Qualifier("ingredientDataRepository") IngredientRepository ingredientRepository) {
     this.ingredientRepository = ingredientRepository;
   }
 

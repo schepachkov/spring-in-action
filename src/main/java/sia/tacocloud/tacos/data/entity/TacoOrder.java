@@ -1,12 +1,11 @@
-package sia.tacocloud.tacos;
+package sia.tacocloud.tacos.data.entity;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
+import sia.tacocloud.tacos.config.security.user_details.DbUser;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -52,6 +51,9 @@ public class TacoOrder implements Serializable {
 
   @OneToMany(cascade = CascadeType.ALL)
   private List<Taco> tacos = new ArrayList<>();
+
+  @ManyToOne
+  private DbUser user;
 
   public void addTaco(Taco taco) {
     this.tacos.add(taco);

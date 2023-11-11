@@ -1,11 +1,11 @@
-package sia.tacocloud.tacos.web;
+package sia.tacocloud.tacos.service.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import sia.tacocloud.tacos.Ingredient;
-import sia.tacocloud.tacos.data.ingredient.IngredientRepository;
+import sia.tacocloud.tacos.data.entity.Ingredient;
+import sia.tacocloud.tacos.data.service.ingredient.IngredientRepository;
 
 
 @Component

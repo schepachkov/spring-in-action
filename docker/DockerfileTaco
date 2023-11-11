@@ -1,0 +1,6 @@
+FROM eclipse-temurin:11
+
+WORKDIR app
+COPY /mvn-build/taco-cloud-0.0.1.jar taco-app.jar
+
+CMD ["java", "-jar", "taco-app.jar"]

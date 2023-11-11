@@ -1,0 +1,1 @@
+docker run --name postgre_db -e POSTGRES_DB=tacocloud -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -p 5432:5432 postgres:15

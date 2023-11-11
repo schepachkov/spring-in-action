@@ -1,9 +1,9 @@
-package sia.tacocloud.tacos.data.ingredient;
+package sia.tacocloud.tacos.data.service.ingredient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import sia.tacocloud.tacos.Ingredient;
+import sia.tacocloud.tacos.data.entity.Ingredient;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

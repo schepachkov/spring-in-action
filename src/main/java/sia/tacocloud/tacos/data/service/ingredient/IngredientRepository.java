@@ -1,6 +1,6 @@
-package sia.tacocloud.tacos.data.ingredient;
+package sia.tacocloud.tacos.data.service.ingredient;
 
-import sia.tacocloud.tacos.Ingredient;
+import sia.tacocloud.tacos.data.entity.Ingredient;
 
 import java.util.Optional;
 

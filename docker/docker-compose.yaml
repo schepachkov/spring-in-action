@@ -1,0 +1,30 @@
+version: '2.1'
+
+services:
+  postgresdb_taco:
+    image: postgres:15
+    container_name: postgresdb_taco
+    restart: always
+    environment:
+      POSTGRES_DB: tacocloud
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5432:5432"
+
+  taco_app:
+    container_name: taco_app
+    build:
+      context: .
+      dockerfile: DockerfileTaco
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    environment:
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    depends_on:
+      postgresdb_taco:
+        condition: service_started
+
+
+
