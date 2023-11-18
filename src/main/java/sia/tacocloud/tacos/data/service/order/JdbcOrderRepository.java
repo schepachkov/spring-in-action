@@ -1,12 +1,14 @@
 package sia.tacocloud.tacos.data.service.order;
 
 import org.springframework.asm.Type;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import sia.tacocloud.tacos.config.security.user_details.DbUser;
 import sia.tacocloud.tacos.data.entity.Ingredient;
 import sia.tacocloud.tacos.data.entity.Taco;
 import sia.tacocloud.tacos.data.entity.TacoOrder;
@@ -66,6 +68,11 @@ public class JdbcOrderRepository implements OrderRepository {
       saveTaco(orderId, i++, taco);
     }
     return order;
+  }
+
+  @Override
+  public List<TacoOrder> findByUserOrderByPlacedAtDesc(DbUser user, Pageable pageable) {
+    return null;
   }
 
   private long saveTaco(Long orderId, int orderKey, Taco taco) {

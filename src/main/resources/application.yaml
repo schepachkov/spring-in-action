@@ -15,8 +15,12 @@ server:
 
 logging:
   file:
-    path: /Users/20303518/work-applications/SPRING IN ACTION/new/taco-cloud/src/main/resources
+    path: /var/logs
     file: TacoCloud.log
   level:
     root: INFO
     org.springframework.security: DEBUG
+
+taco:
+  orders:
+    page-size: 10
