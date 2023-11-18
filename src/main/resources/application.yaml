@@ -9,3 +9,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+
+server:
+  port: 8443
+
+logging:
+  file:
+    path: /Users/20303518/work-applications/SPRING IN ACTION/new/taco-cloud/src/main/resources
+    file: TacoCloud.log
+  level:
+    root: INFO
+    org.springframework.security: DEBUG
