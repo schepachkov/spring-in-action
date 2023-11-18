@@ -4,3 +4,8 @@ spring:
     name: tacocloud
     username: user
     password: pass
+    url: jdbc:postgresql://localhost:5432/tacocloud
+
+  jpa:
+    hibernate:
+      ddl-auto: create
