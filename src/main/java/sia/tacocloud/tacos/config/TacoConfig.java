@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import sia.tacocloud.tacos.data.entity.Ingredient;
 import sia.tacocloud.tacos.data.entity.Ingredient.Type;
 import sia.tacocloud.tacos.data.service.ingredient.IngredientRepository;
@@ -18,6 +19,7 @@ public class TacoConfig {
   }
 
   @Bean
+  @Profile("DEV")
   public ApplicationRunner commandLineRunner() {
     return args -> {
       ingredientRepository.save(new Ingredient("FLTO", "Flour Tortilla", Type.WRAP));
