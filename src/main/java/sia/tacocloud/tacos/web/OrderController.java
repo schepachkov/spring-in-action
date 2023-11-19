@@ -1,7 +1,6 @@
 package sia.tacocloud.tacos.web;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import sia.tacocloud.tacos.config.TacoOrderProps;
 import sia.tacocloud.tacos.config.security.user_details.DbUser;
 import sia.tacocloud.tacos.data.entity.TacoOrder;
-import sia.tacocloud.tacos.data.service.order.OrderRepository;
+import sia.tacocloud.tacos.data.service.order.OrderDataRepository;
 
 @Controller
 @RequestMapping("/orders")
@@ -25,10 +24,10 @@ import sia.tacocloud.tacos.data.service.order.OrderRepository;
 @SessionAttributes("tacoOrder")
 public class OrderController {
 
-  private final OrderRepository orderRepository;
+  private final OrderDataRepository orderRepository;
   private final TacoOrderProps tacoOrderProps;
 
-  public OrderController(@Qualifier("orderDataRepository") OrderRepository orderRepository, TacoOrderProps tacoOrderProps) {
+  public OrderController(OrderDataRepository orderRepository, TacoOrderProps tacoOrderProps) {
     this.orderRepository = orderRepository;
     this.tacoOrderProps = tacoOrderProps;
   }
@@ -46,7 +45,11 @@ public class OrderController {
   }
 
   @PostMapping
-  public String processOrder(/*@Valid*/ TacoOrder tacoOrder, Errors errors, SessionStatus sessionStatus, Authentication authentication) {
+  public String processOrder(
+      /*@Valid*/ TacoOrder tacoOrder,
+      Errors errors,
+      SessionStatus sessionStatus,
+      Authentication authentication) {
     if (errors.hasErrors()) {
       return "orderForm";
     }
