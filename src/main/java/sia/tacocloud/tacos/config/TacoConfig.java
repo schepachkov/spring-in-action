@@ -6,13 +6,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import sia.tacocloud.tacos.config.security.user_details.DbUser;
 import sia.tacocloud.tacos.data.entity.Ingredient;
 import sia.tacocloud.tacos.data.entity.Ingredient.Type;
 import sia.tacocloud.tacos.data.entity.Taco;
 import sia.tacocloud.tacos.data.service.ingredient.IngredientRepository;
 import sia.tacocloud.tacos.data.service.taco.TacoDataRepository;
-import sia.tacocloud.tacos.data.service.taco.TacoRepository;
 import sia.tacocloud.tacos.data.service.user.UserRepository;
 
 import java.util.Arrays;
@@ -21,9 +20,11 @@ import java.util.Arrays;
 public class TacoConfig {
 
   private final IngredientRepository ingredientRepository;
+  private final UserRepository userRepository;
 
-  public TacoConfig(@Qualifier("ingredientDataRepository") IngredientRepository ingredientRepository) {
+  public TacoConfig(@Qualifier("ingredientDataRepository") IngredientRepository ingredientRepository, UserRepository userRepository) {
     this.ingredientRepository = ingredientRepository;
+    this.userRepository = userRepository;
   }
 
   //@Bean
@@ -80,6 +81,14 @@ public class TacoConfig {
       taco3.setName("Veg-Out");
       taco3.setIngredients(Arrays.asList(flourTortilla, cornTortilla, tomatoes, lettuce, salsa));
       tacoRepo.save(taco3);
+    };
+  }
+
+  @Bean
+  @Profile("DEV")
+  public CommandLineRunner loadUser() {
+    return args -> {
+      userRepository.save(new DbUser(null, "admin", "admin", "", "", "", "", "", ""));
     };
   }
 }
