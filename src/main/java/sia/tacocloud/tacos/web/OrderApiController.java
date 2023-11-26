@@ -18,7 +18,10 @@ public class OrderApiController {
   private final OrderMessagingService messageService;
   private final JmsOrderReceiver jmsOrderReceiver;
 
-  public OrderApiController(OrderDataRepository orderRepository, OrderMessagingService messageService, JmsOrderReceiver jmsOrderReceiver) {
+  public OrderApiController(
+      OrderDataRepository orderRepository,
+      OrderMessagingService messageService,
+      JmsOrderReceiver jmsOrderReceiver) {
     this.orderRepository = orderRepository;
     this.messageService = messageService;
     this.jmsOrderReceiver = jmsOrderReceiver;
