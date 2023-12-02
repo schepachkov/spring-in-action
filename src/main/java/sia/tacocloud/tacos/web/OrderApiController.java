@@ -1,13 +1,12 @@
 package sia.tacocloud.tacos.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import sia.tacocloud.tacos.data.entity.TacoOrder;
 import sia.tacocloud.tacos.data.service.order.OrderDataRepository;
-import sia.tacocloud.tacos.jms.JmsOrderReceiver;
-import sia.tacocloud.tacos.jms.OrderMessagingService;
-
-import javax.jms.JMSException;
+import sia.tacocloud.tacos.jms.mq.OrderMessagingService;
+import sia.tacocloud.tacos.jms.mq.RabbitOrderReceiver;
 
 @RestController
 @RequestMapping(path = "/api/orders", produces = "application/json")
@@ -15,28 +14,27 @@ import javax.jms.JMSException;
 public class OrderApiController {
 
   private final OrderDataRepository orderRepository;
-  private final OrderMessagingService messageService;
-  private final JmsOrderReceiver jmsOrderReceiver;
+  private final OrderMessagingService orderMessagingService;
 
-  public OrderApiController(
-      OrderDataRepository orderRepository,
-      OrderMessagingService messageService,
-      JmsOrderReceiver jmsOrderReceiver) {
+  @Autowired
+  private RabbitOrderReceiver rabbitOrderReceiver;
+
+  public OrderApiController(OrderDataRepository orderRepository, OrderMessagingService orderMessagingService) {
     this.orderRepository = orderRepository;
-    this.messageService = messageService;
-    this.jmsOrderReceiver = jmsOrderReceiver;
+    this.orderMessagingService = orderMessagingService;
   }
 
   @PostMapping(consumes = "application/json")
   @ResponseStatus(HttpStatus.CREATED)
-  public TacoOrder postOrder(@RequestBody TacoOrder order) {
-    messageService.sendOrder(order);
-    return orderRepository.save(order);
+  public TacoOrder postOrder(@RequestBody TacoOrder tacoOrder) {
+    orderMessagingService.sendOrder(tacoOrder);
+    //return orderRepository.save(tacoOrder);
+    return tacoOrder;
   }
 
   @GetMapping
   @RequestMapping("get-msg")
-  public TacoOrder getTacoOrder() throws JMSException {
-    return jmsOrderReceiver.receive();
+  public TacoOrder getTacoOrder() {
+    return rabbitOrderReceiver.receiveTacoOrder();
   }
 }

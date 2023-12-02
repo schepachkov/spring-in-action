@@ -5,15 +5,14 @@ spring:
     username: user
     password: pass
     url: jdbc:postgresql://localhost:5432/tacocloud
-  jms:
-    template:
-      default-destination: tacocloud.order.queue
-  artemis:
+  rabbitmq:
     host: localhost
-    port: 61616
-    user: admin
-    password: admin
-
+    port: 5672
+    username: user
+    password: password
+    template:
+      exchange: tacocloud.order
+      routing-key: defaultKey
   jpa:
     hibernate:
       ddl-auto: create

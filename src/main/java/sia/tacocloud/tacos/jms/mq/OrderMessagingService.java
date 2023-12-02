@@ -1,8 +1,8 @@
-package sia.tacocloud.tacos.jms;
+package sia.tacocloud.tacos.jms.mq;
 
 import sia.tacocloud.tacos.data.entity.TacoOrder;
 
 public interface OrderMessagingService {
 
-    void sendOrder(TacoOrder order);
+    void sendOrder(TacoOrder tacoOrder);
 }

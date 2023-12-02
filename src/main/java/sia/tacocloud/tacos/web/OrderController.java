@@ -56,7 +56,7 @@ public class OrderController {
     log.info("Order submitted: {}", tacoOrder);
     DbUser user = (DbUser) authentication.getPrincipal();
     tacoOrder.setUser(user);
-    orderRepository.save(tacoOrder);
+    //orderRepository.save(tacoOrder);
     sessionStatus.setComplete();
     return "redirect:/orders";
   }
