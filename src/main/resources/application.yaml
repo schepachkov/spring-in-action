@@ -5,14 +5,9 @@ spring:
     username: user
     password: pass
     url: jdbc:postgresql://localhost:5432/tacocloud
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: user
-    password: password
-    template:
-      exchange: tacocloud.order
-      routing-key: defaultKey
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
   jpa:
     hibernate:
       ddl-auto: create

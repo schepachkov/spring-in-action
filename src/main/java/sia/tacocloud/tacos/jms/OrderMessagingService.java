@@ -1,4 +1,4 @@
-package sia.tacocloud.tacos.jms.mq;
+package sia.tacocloud.tacos.jms;
 
 import sia.tacocloud.tacos.data.entity.TacoOrder;
 
