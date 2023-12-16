@@ -5,9 +5,6 @@ spring:
     username: user
     password: pass
     url: jdbc:postgresql://localhost:5432/tacocloud
-  kafka:
-    bootstrap-servers:
-      - localhost:9092
   jpa:
     hibernate:
       ddl-auto: create
@@ -22,6 +19,22 @@ logging:
   level:
     root: INFO
     org.springframework.security: DEBUG
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: '*'
+info:
+  lol: kek
+  contact:
+    email: support@tacocloud.com
+    phone: 8-800-555-35-35
+
 
 taco:
   orders:

@@ -31,6 +31,11 @@ create table if not exists Ingredient
     name varchar(25) not null,
     type varchar(10) not null
 );
+create table if not exists Test_Table (
+     id SERIAL primary key ,
+     name varchar(30),
+     time timestamp default now()
+);
 alter table Taco
     add foreign key (taco_order) references Taco_Order (id);
 alter table Ingredient_Ref
