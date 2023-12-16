@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import sia.tacocloud.tacos.actuator.service.MetricService;
 import sia.tacocloud.tacos.config.TacoOrderProps;
 import sia.tacocloud.tacos.config.security.user_details.DbUser;
 import sia.tacocloud.tacos.data.entity.TacoOrder;
@@ -26,10 +27,12 @@ public class OrderController {
 
   private final OrderDataRepository orderRepository;
   private final TacoOrderProps tacoOrderProps;
+  private final MetricService metricService;
 
-  public OrderController(OrderDataRepository orderRepository, TacoOrderProps tacoOrderProps) {
+  public OrderController(OrderDataRepository orderRepository, TacoOrderProps tacoOrderProps, MetricService metricService) {
     this.orderRepository = orderRepository;
     this.tacoOrderProps = tacoOrderProps;
+    this.metricService = metricService;
   }
 
   @GetMapping("/current")
@@ -56,7 +59,10 @@ public class OrderController {
     log.info("Order submitted: {}", tacoOrder);
     DbUser user = (DbUser) authentication.getPrincipal();
     tacoOrder.setUser(user);
-    //orderRepository.save(tacoOrder);
+    orderRepository.save(tacoOrder);
+    tacoOrder.getTacos().forEach(taco -> {
+      metricService.refreshIngredientCounter(taco);
+    });
     sessionStatus.setComplete();
     return "redirect:/orders";
   }

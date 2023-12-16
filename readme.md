@@ -11,3 +11,8 @@ https://kafka.apache.org/quickstart
 3. запускаем кафка bin/kafka-server-start.sh config/server.properties
 4. создаем топик bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
 Для получении информации о топике можно использовать bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092
+
+Защита ендпоинтов **актуатора** делается аналогично любым другим ендпоинтам. 
+Но best practise - это не использовать захардкоженный через ямл файл путь, а использовать **EndpointRequest.toAnyEndpoint()** - метод специально для актуатора, который обезопсит ендпоинты актуатора не зависимо от base-path в ямле
+Можно использовать с exclude **EndpointRequest.toAnyEndpoint().excluding("health", "info")**
+Или же выбрать те ендпоинты, которые нужно закрыть авторизацией - http.requestMatcher(EndpointRequest.to("beans", "threaddump", "loggers"))
